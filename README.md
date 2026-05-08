@@ -1,6 +1,6 @@
 # foxxiplay-gen
 
-Codex skill for generating images and videos through the FoxxiPlay API relay.
+Agent skill for generating images and videos through the FoxxiPlay API relay.
 
 ## What it does
 
@@ -65,15 +65,25 @@ Show all commands:
 node scripts/main.mjs --help
 ```
 
-## Install as a Codex skill
+## Install as an agent skill
 
-Clone this repository into your Codex skills directory:
+Clone this repository into the skills directory used by your agent:
 
 ```bash
-git clone https://github.com/huachneg/foxxiplay-gen.git ~/.codex/skills/foxxiplay-gen
+git clone https://github.com/huachneg/foxxiplay-gen.git <your-agent-skills-dir>/foxxiplay-gen
 ```
 
-Then restart Codex or refresh the skill list.
+Examples:
+
+```bash
+# Codex
+git clone https://github.com/huachneg/foxxiplay-gen.git ~/.codex/skills/foxxiplay-gen
+
+# Claude Code or other agents
+# Use the skill/plugin directory configured by that agent.
+```
+
+Then restart or refresh your agent so it can discover the new skill.
 
 ## Security notes
 
