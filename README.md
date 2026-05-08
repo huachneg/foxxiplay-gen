@@ -17,6 +17,8 @@ Agent skill for generating images and videos through the FoxxiPlay API relay.
 - Node.js 18 or later.
 - A FoxxiPlay API key.
 
+FoxxiPlay platform: http://47.111.187.160/chat
+
 Set the API key before use:
 
 ```bash
