@@ -67,22 +67,31 @@ Show all commands:
 node scripts/main.mjs --help
 ```
 
-## Install as an agent skill
+## Installation
 
-Clone this repository into the skills directory used by your agent:
+### Option 1: One-line install (recommended)
 
 ```bash
-git clone https://github.com/huachneg/foxxiplay-gen.git <your-agent-skills-dir>/foxxiplay-gen
+npx skills add https://github.com/huachneg/foxxiplay-gen --skill foxxiplay-gen
 ```
 
-Examples:
+### Option 2: Send this prompt to your AI agent
+
+Copy the following prompt into Claude Code, Cursor, Codex, or any AI agent with shell access:
+
+> Help me install the `foxxiplay-gen` agent skill. Please follow these steps:
+>
+> 1. Make sure `~/.claude/skills/` exists. Create it if needed.
+> 2. Run `git clone https://github.com/huachneg/foxxiplay-gen.git ~/.claude/skills/foxxiplay-gen`
+> 3. Verify that `~/.claude/skills/foxxiplay-gen/` contains `SKILL.md`, `README.md`, and `scripts/`.
+> 4. Tell me the installation is complete. After that, requests such as "generate an image with FoxxiPlay" or "make a Seedance video" should trigger this skill.
+
+For agents that use a different skills directory, replace `~/.claude/skills/` with that agent's configured skill/plugin directory.
+
+### Option 3: Manual command line
 
 ```bash
-# Codex
-git clone https://github.com/huachneg/foxxiplay-gen.git ~/.codex/skills/foxxiplay-gen
-
-# Claude Code or other agents
-# Use the skill/plugin directory configured by that agent.
+git clone https://github.com/huachneg/foxxiplay-gen.git ~/.claude/skills/foxxiplay-gen
 ```
 
 Then restart or refresh your agent so it can discover the new skill.
