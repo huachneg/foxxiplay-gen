@@ -67,22 +67,31 @@ node scripts/main.mjs video \
 node scripts/main.mjs --help
 ```
 
-## 作为 Agent Skill 安装
+## 安装
 
-将仓库克隆到你的 agent 使用的 skills 目录：
+### 方式一：一行命令安装（推荐）
 
 ```bash
-git clone https://github.com/huachneg/foxxiplay-gen.git <your-agent-skills-dir>/foxxiplay-gen
+npx skills add https://github.com/huachneg/foxxiplay-gen --skill foxxiplay-gen
 ```
 
-示例：
+### 方式二：把下面这段话直接发给 AI
+
+把下面这段话复制粘贴给 Claude Code / Cursor / Codex / 任何有 shell 权限的 AI Agent，它会自动完成安装：
+
+> 帮我安装 `foxxiplay-gen` 这个 Agent skill。请按下面步骤做：
+>
+> 1. 确保 `~/.claude/skills/` 目录存在，不存在就创建。
+> 2. 执行 `git clone https://github.com/huachneg/foxxiplay-gen.git ~/.claude/skills/foxxiplay-gen`
+> 3. 验证：`ls ~/.claude/skills/foxxiplay-gen/` 应该看到 `SKILL.md`、`README.md`、`scripts/`。
+> 4. 告诉我安装好了。之后我说“用 FoxxiPlay 生成一张图”或“做一个 Seedance 视频”之类的话，就会触发这个 skill。
+
+如果你的 agent 使用的不是 `~/.claude/skills/`，把它替换成该 agent 配置的 skill / plugin 目录即可。
+
+### 方式三：手动命令行
 
 ```bash
-# Codex
-git clone https://github.com/huachneg/foxxiplay-gen.git ~/.codex/skills/foxxiplay-gen
-
-# Claude Code 或其他 agent
-# 使用该 agent 配置的 skill / plugin 目录。
+git clone https://github.com/huachneg/foxxiplay-gen.git ~/.claude/skills/foxxiplay-gen
 ```
 
 然后重启或刷新你的 agent，让它发现新的 skill。
