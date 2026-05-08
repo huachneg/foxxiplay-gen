@@ -17,6 +17,8 @@
 - Node.js 18 或更高版本。
 - FoxxiPlay API Key。
 
+FoxxiPlay 平台：http://47.111.187.160/chat
+
 使用前设置 API Key：
 
 ```bash
