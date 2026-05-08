@@ -1,5 +1,7 @@
 # foxxiplay-gen
 
+[中文说明](./README.zh-CN.md)
+
 Agent skill for generating images and videos through the FoxxiPlay API relay.
 
 ## What it does
