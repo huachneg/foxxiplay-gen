@@ -34,7 +34,7 @@ const DEFAULTS = {
 const API_KEY_ERROR = "FOXXIPLAY_API_KEY not set (legacy FOXICOIN_API_KEY also supported)";
 const IMAGE_SIZE_RULES = {
   "doubao-seedream-4.5": ["2K", "4K"],
-  "doubao-seedream-5.0-lite": ["2K", "3K", "4K"],
+  "doubao-seedream-5.0": ["2K", "3K", "4K"],
 };
 
 const HELP = `FoxxiPlay gen — image & video generation CLI
@@ -50,8 +50,8 @@ Commands:
 Image options:
   -p, --prompt <text>            Required
   -m, --model <id>               Default doubao-seedream-5.0 (alt: doubao-seedream-4.5)
-  -s, --size <size>              Default 2048x2048. For doubao-seedream-4.5 / 5.0-lite, use either
-                                 resolution mode (4.5: 2K/4K; 5.0-lite: 2K/3K/4K) plus aspect/use in prompt, or pixel
+  -s, --size <size>              Default 2048x2048. For doubao-seedream-4.5 / 5.0, use either
+                                 resolution mode (4.5: 2K/4K; 5.0: 2K/3K/4K) plus aspect/use in prompt, or pixel
                                  mode (e.g. 2048x2048, 2848x1600, 1600x2848). Do not mix modes.
                                  Pixel mode must satisfy total pixels 3,686,400-16,777,216 and
                                  aspect ratio 1:16-16:1.
