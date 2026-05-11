@@ -32,6 +32,10 @@ const DEFAULTS = {
 };
 
 const API_KEY_ERROR = "FOXXIPLAY_API_KEY not set (legacy FOXICOIN_API_KEY also supported)";
+const IMAGE_SIZE_RULES = {
+  "doubao-seedream-4.5": ["2K", "4K"],
+  "doubao-seedream-5.0-lite": ["2K", "3K", "4K"],
+};
 
 const HELP = `FoxxiPlay gen — image & video generation CLI
 
@@ -46,7 +50,11 @@ Commands:
 Image options:
   -p, --prompt <text>            Required
   -m, --model <id>               Default doubao-seedream-5.0 (alt: doubao-seedream-4.5)
-  -s, --size <WxH>               Default 2048x2048 (e.g. 1024x1024, 1792x2304)
+  -s, --size <size>              Default 2048x2048. For doubao-seedream-4.5 / 5.0-lite, use either
+                                 resolution mode (4.5: 2K/4K; 5.0-lite: 2K/3K/4K) plus aspect/use in prompt, or pixel
+                                 mode (e.g. 2048x2048, 2848x1600, 1600x2848). Do not mix modes.
+                                 Pixel mode must satisfy total pixels 3,686,400-16,777,216 and
+                                 aspect ratio 1:16-16:1.
       --negative-prompt <text>   Negative prompt
   -n, --count <1-4>              Number of images, default 1
       --seed <int>               Random seed
@@ -181,6 +189,29 @@ function die(msg, code = 1) {
   process.exit(code);
 }
 
+function validateImageSizeForModel(model, size) {
+  const allowedResolutions = IMAGE_SIZE_RULES[model];
+  if (!allowedResolutions) return;
+  if (allowedResolutions.includes(size)) return;
+
+  const match = /^(\d+)x(\d+)$/i.exec(size);
+  if (!match) {
+    die(`For ${model}, --size must be ${allowedResolutions.join("/")} or <width>x<height>, e.g. 2048x2048`);
+  }
+
+  const width = Number(match[1]);
+  const height = Number(match[2]);
+  const totalPixels = width * height;
+  const aspectRatio = width / height;
+
+  if (totalPixels < 3686400 || totalPixels > 16777216) {
+    die(`Invalid --size ${size}: total pixels must be 3,686,400-16,777,216 for ${model}`);
+  }
+  if (aspectRatio < 1 / 16 || aspectRatio > 16) {
+    die(`Invalid --size ${size}: aspect ratio must be between 1:16 and 16:1 for ${model}`);
+  }
+}
+
 // ---------- HTTP ----------
 
 async function request(method, url, { apiKey, body, expectJson = true } = {}) {
@@ -267,6 +298,7 @@ async function cmdImage({ opts, flags, repeats }) {
     size: opts.size || DEFAULTS.imageSize,
     response_format: opts["response-format"] || "url",
   };
+  validateImageSizeForModel(body.model, body.size);
   if (opts["negative-prompt"]) body.negative_prompt = opts["negative-prompt"];
   if (opts.count) body.count = Number(opts.count);
   if (opts.seed !== undefined) body.seed = Number(opts.seed);
