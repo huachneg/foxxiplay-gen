@@ -53,7 +53,7 @@ node scripts/main.mjs image \
 
 Common options:
 
-- `--model`: defaults to `doubao-seedream-5.0`; `doubao-seedream-4.5` is also available.
+- `--model`: defaults to `doubao-seedream-5.0`; `doubao-seedream-4.5` is also available. `doubao-seedream-5.0-lite` is accepted as an alias, but the request sent to FoxxiPlay uses the actual exposed model ID `doubao-seedream-5.0`.
 - `--size`: output size, defaults to `2048x2048`.
 - `--reference`: reference image URL or local path; repeatable. Local paths are uploaded automatically.
 - `--count`: number of images, usually 1 to 4.
@@ -62,10 +62,10 @@ Seedream size rules at a glance:
 
 | Format | Models | Notes |
 |---|---|---|
-| `2K` | `doubao-seedream-4.5`, `doubao-seedream-5.0` | Describe the desired ratio or use case in the prompt, such as "vertical 9:16 poster" or "square avatar". |
-| `3K` | `doubao-seedream-5.0` | Same behavior; the model decides the final pixel size from the prompt. |
-| `4K` | `doubao-seedream-4.5`, `doubao-seedream-5.0` | Same behavior. |
-| `<width>x<height>` | `doubao-seedream-4.5`, `doubao-seedream-5.0` | Total pixels must be `3,686,400` to `16,777,216`; aspect ratio must be `1:16` to `16:1`. |
+| `2K` | `doubao-seedream-4.5`, `doubao-seedream-5.0` (`doubao-seedream-5.0-lite` alias) | Describe the desired ratio or use case in the prompt, such as "vertical 9:16 poster" or "square avatar". |
+| `3K` | `doubao-seedream-5.0` (`doubao-seedream-5.0-lite` alias) | Same behavior; the model decides the final pixel size from the prompt. |
+| `4K` | `doubao-seedream-4.5`, `doubao-seedream-5.0` (`doubao-seedream-5.0-lite` alias) | Same behavior. |
+| `<width>x<height>` | `doubao-seedream-4.5`, `doubao-seedream-5.0` (`doubao-seedream-5.0-lite` alias) | Total pixels must be `3,686,400` to `16,777,216`; aspect ratio must be `1:16` to `16:1`. |
 
 Useful pixel sizes: `2048x2048`, `2304x1728`, `1728x2304`, `2848x1600`, `1600x2848`, `2496x1664`, `1664x2496`, and `3136x1344`. For `doubao-seedream-5.0`, 3K options such as `3072x3072`, `4096x2304`, and `2304x4096` are also available.
 
