@@ -22,13 +22,15 @@ description: FoxxiPlay AI 图片与视频生成 Skill。封装 FoxxiPlay API 中
 | 图片 `image` | `doubao-seedream-5.0` | `doubao-seedream-4.5` |
 | 视频 `video` | `doubao-seedance-2.0` | `doubao-seedance-2.0-fast`, `doubao-seedance-1.5-pro`, `happyhorse-1.0-t2v`, `happyhorse-1.0-i2v`, `happyhorse-1.0-r2v`, `happyhorse-1.0-video-edit` |
 
+说明：`doubao-seedream-5.0` 是统一模型名，不再单独使用 `doubao-seedream-5.0-lite` 作为公开名称。
+
 仅 `doubao-seedance-2.0` 支持显式 `generate_audio: true` 参数。Seedance 2.0 也支持视频输入编辑和参考音频引导，可通过 `--video <url/path>`、`--audio <url/path>` 传入公网 URL 或本地文件。
 
-### Seedream 图片尺寸规则
+## Seedream 图片尺寸规则
 
-使用 `doubao-seedream-4.5` 或 `doubao-seedream-5.0-lite` 生成图片时，`--size` 支持两种写法，**不可混用**：
+使用 `doubao-seedream-4.5` 或 `doubao-seedream-5.0` 生成图片时，`--size` 支持两种写法，**不可混用**：
 
-1. **分辨率模式**：指定该模型支持的 `2K` / `3K` / `4K` 这类分辨率值，同时在 prompt 中用自然语言说明宽高比、图片形状或用途，例如“竖版 9:16 海报”“方形头像”“横版 16:9 电商主视觉”。最终像素由模型判断。
+1. **分辨率模式**：指定 `2K` / `3K` / `4K` 这类分辨率值，同时在 prompt 中用自然语言说明宽高比、图片形状或用途，例如“竖版 9:16 海报”“方形头像”“横版 16:9 电商主视觉”。最终像素由模型判断。
 2. **像素模式**：`--size <宽>x<高>`，例如 `2048x2048`。默认值为 `2048x2048`。
 
 分辨率模式的可选值按模型区分：
@@ -36,7 +38,7 @@ description: FoxxiPlay AI 图片与视频生成 Skill。封装 FoxxiPlay API 中
 | 模型 | 可选分辨率值 |
 |------|------|
 | `doubao-seedream-4.5` | `2K`, `4K` |
-| `doubao-seedream-5.0-lite` | `2K`, `3K`, `4K` |
+| `doubao-seedream-5.0` | `2K`, `3K`, `4K` |
 
 像素模式必须同时满足：
 
@@ -44,69 +46,16 @@ description: FoxxiPlay AI 图片与视频生成 Skill。封装 FoxxiPlay API 中
 - 宽高比范围：`1/16` 到 `16`。
 - 总像素限制是宽度和高度的乘积限制，不是对单边宽度或高度的限制。
 
-示例：
+常用像素值：`2048x2048`、`2304x1728`、`1728x2304`、`2848x1600`、`1600x2848`、`2496x1664`、`1664x2496`、`3136x1344`。`doubao-seedream-5.0` 还可使用 3K 档，例如 `3072x3072`、`4096x2304`、`2304x4096`。
 
-- 有效：`3750x1250`，总像素 `4687500`，宽高比 `3`。
-- 无效：`1500x1500`，总像素 `2250000`，低于最低总像素要求。
+## HappyHorse 1.0 视频模型
 
-`doubao-seedream-4.5` 推荐像素值：
-
-| 分辨率 | 宽高比 | 宽高像素值 |
-|------|------|------|
-| 2K | 1:1 | `2048x2048` |
-| 2K | 4:3 | `2304x1728` |
-| 2K | 3:4 | `1728x2304` |
-| 2K | 16:9 | `2848x1600` |
-| 2K | 9:16 | `1600x2848` |
-| 2K | 3:2 | `2496x1664` |
-| 2K | 2:3 | `1664x2496` |
-| 2K | 21:9 | `3136x1344` |
-| 4K | 1:1 | `4096x4096` |
-| 4K | 3:4 | `3520x4704` |
-| 4K | 4:3 | `4704x3520` |
-| 4K | 16:9 | `5504x3040` |
-| 4K | 9:16 | `3040x5504` |
-| 4K | 2:3 | `3328x4992` |
-| 4K | 3:2 | `4992x3328` |
-| 4K | 21:9 | `6240x2656` |
-
-`doubao-seedream-5.0-lite` 推荐像素值：
-
-| 分辨率 | 宽高比 | 宽高像素值 |
-|------|------|------|
-| 2K | 1:1 | `2048x2048` |
-| 2K | 4:3 | `2304x1728` |
-| 2K | 3:4 | `1728x2304` |
-| 2K | 16:9 | `2848x1600` |
-| 2K | 9:16 | `1600x2848` |
-| 2K | 3:2 | `2496x1664` |
-| 2K | 2:3 | `1664x2496` |
-| 2K | 21:9 | `3136x1344` |
-| 3K | 1:1 | `3072x3072` |
-| 3K | 4:3 | `3456x2592` |
-| 3K | 3:4 | `2592x3456` |
-| 3K | 16:9 | `4096x2304` |
-| 3K | 9:16 | `2304x4096` |
-| 3K | 2:3 | `2496x3744` |
-| 3K | 3:2 | `3744x2496` |
-| 3K | 21:9 | `4704x2016` |
-| 4K | 1:1 | `4096x4096` |
-| 4K | 3:4 | `3520x4704` |
-| 4K | 4:3 | `4704x3520` |
-| 4K | 16:9 | `5504x3040` |
-| 4K | 9:16 | `3040x5504` |
-| 4K | 2:3 | `3328x4992` |
-| 4K | 3:2 | `4992x3328` |
-| 4K | 21:9 | `6240x2656` |
-
-### HappyHorse 1.0 视频模型
-
-同样走 `/v1/contents/generations/tasks` 异步任务接口，`content` 数组结构与 Seedance 一致。
+同样走 `/v1/contents/generations/tasks` 异步任务接口。
 
 | 模型 | 模式 | 必填参数 | 适用场景 |
 |------|------|---------|---------|
 | `happyhorse-1.0-t2v` | 文生视频 | `content` (text), `ratio`, `resolution`, `duration` | 创意短片、镜头预览、纯文本驱动的动态画面 |
-| `happyhorse-1.0-i2v` | 首帧图生视频 | `content` (text + image_url), `resolution`, `duration` | 让指定首帧自然动起来；比例由首帧图决定，**不传 `ratio`** |
+| `happyhorse-1.0-i2v` | 首帧图生视频 | `content` (text + image_url), `resolution`, `duration` | 让指定首帧自然动起来；比例由首帧图决定，未显式传入时不传 `ratio` |
 | `happyhorse-1.0-r2v` | 参考图生视频 | `content` (text + image_url), `ratio`, `resolution`, `duration` | 角色 / 产品 / 场景一致性视频 |
 | `happyhorse-1.0-video-edit` | 视频编辑 | `input` (prompt + video + 可选 reference_image), `parameters` | 自然语言指令编辑视频，可参考最多 5 张图片局部或全局编辑视频元素 |
 
@@ -140,13 +89,13 @@ FOXXIPLAY_UPLOAD_URL  可选，本地图片/视频自动上传端点，默认 ht
 ```bash
 export FOXXIPLAY_API_KEY="sk-xxxxxxxx"
 
-# 1. 文生图（同步，立即返回 URL）
+# 文生图（同步，立即返回 URL）
 node <skills-dir>/foxxiplay-gen/scripts/main.mjs image \
   --prompt "未来感中式茶室，竹影、浅色石材、漂浮的全息菜单" \
   --size 2048x2048 \
   --output ./tea-room.png
 
-# 2. 文生视频（异步，提交后自动轮询直到完成）
+# 文生视频（异步，提交后自动轮询直到完成）
 node <skills-dir>/foxxiplay-gen/scripts/main.mjs video \
   --prompt "赛博朋克雨夜城市，少女听到声音后慢慢回头，电影感" \
   --ratio 9:16 \
@@ -155,30 +104,7 @@ node <skills-dir>/foxxiplay-gen/scripts/main.mjs video \
   --generate-audio \
   --output ./scene.mp4
 
-# 2a. HappyHorse 文生视频（T2V）
-node <skills-dir>/foxxiplay-gen/scripts/main.mjs video \
-  --model happyhorse-1.0-t2v \
-  --prompt "清晨森林里一束阳光穿过树叶，镜头缓慢前移，电影感" \
-  --ratio 16:9 --resolution 720p --duration 5 \
-  --output ./forest.mp4
-
-# 2b. HappyHorse 首帧图生视频（I2V，比例由首帧图决定，无需 --ratio）
-node <skills-dir>/foxxiplay-gen/scripts/main.mjs video \
-  --model happyhorse-1.0-i2v \
-  --prompt "让首帧中的人物自然抬头微笑，背景光线轻微变化" \
-  --image https://example.com/first-frame.png \
-  --resolution 720p --duration 5 \
-  --output ./i2v.mp4
-
-# 2c. HappyHorse 参考图生视频（R2V）
-node <skills-dir>/foxxiplay-gen/scripts/main.mjs video \
-  --model happyhorse-1.0-r2v \
-  --prompt "根据参考图生成一段镜头稳定的产品展示视频，柔和灯光，画面干净" \
-  --image https://example.com/reference.png \
-  --ratio 16:9 --resolution 720p --duration 5 \
-  --output ./r2v.mp4
-
-# 2c2. Seedance 首尾帧生成（第一张作为首帧，第二张作为尾帧）
+# Seedance 首尾帧生成（第一张作为首帧，第二张作为尾帧）
 node <skills-dir>/foxxiplay-gen/scripts/main.mjs video \
   --model doubao-seedance-2.0 \
   --prompt "人物快速转身，雾气遮住镜头，雾散后换成尾帧服装" \
@@ -187,7 +113,7 @@ node <skills-dir>/foxxiplay-gen/scripts/main.mjs video \
   --resolution 720p --duration 5 \
   --output ./start-to-end.mp4
 
-# 2d. Seedance 视频输入编辑（例如换背景）
+# Seedance 视频输入编辑（例如换背景）
 node <skills-dir>/foxxiplay-gen/scripts/main.mjs video \
   --model doubao-seedance-2.0 \
   --prompt "保留输入视频中的人物、动作和镜头，将背景替换为温暖古风室内场景" \
@@ -195,42 +121,20 @@ node <skills-dir>/foxxiplay-gen/scripts/main.mjs video \
   --ratio 9:16 --resolution 1080p --duration 15 \
   --output ./indoor.mp4
 
-# 2e. Seedance 参考音频生成（例如说话口型 / 语音引导）
+# HappyHorse 文生视频（T2V）
 node <skills-dir>/foxxiplay-gen/scripts/main.mjs video \
-  --model doubao-seedance-2.0 \
-  --prompt "参考图中的人物开心地面向镜头说话，口型尽量匹配参考音频" \
-  --image ./character.jpg \
-  --audio ./voice.mp3 \
-  --ratio 9:16 --resolution 1080p --duration 10 \
-  --generate-audio \
-  --output ./talking.mp4
+  --model happyhorse-1.0-t2v \
+  --prompt "清晨森林里一束阳光穿过树叶，镜头缓慢前移，电影感" \
+  --ratio 16:9 --resolution 720p --duration 5 \
+  --output ./forest.mp4
 
-# 2f. HappyHorse 视频编辑（自然语言指令 + 输入视频 + 最多 5 张参考图）
+# HappyHorse 参考图生视频（R2V）
 node <skills-dir>/foxxiplay-gen/scripts/main.mjs video \
-  --model happyhorse-1.0-video-edit \
-  --prompt "保留原视频人物动作和镜头，把服装替换为参考图风格，背景改为雨夜街道" \
-  --video ./source.mp4 \
-  --image ./style-reference.png \
-  --image ./outfit-reference.png \
-  --ratio 9:16 --resolution 720p --duration 5 \
-  --output ./edited.mp4
-
-# 3. 仅创建任务（不轮询）
-node <skills-dir>/foxxiplay-gen/scripts/main.mjs video \
-  --prompt "城市夜景双人交手" \
-  --no-wait
-
-# 4. 查询任务结果
-node <skills-dir>/foxxiplay-gen/scripts/main.mjs task <task_id>
-
-# 5. 任务列表
-node <skills-dir>/foxxiplay-gen/scripts/main.mjs tasks --limit 20
-
-# 6. 删除任务
-node <skills-dir>/foxxiplay-gen/scripts/main.mjs task-delete <task_id>
-
-# 7. 模型列表
-node <skills-dir>/foxxiplay-gen/scripts/main.mjs models --type video
+  --model happyhorse-1.0-r2v \
+  --prompt "根据参考图生成一段镜头稳定的产品展示视频，柔和灯光，画面干净" \
+  --image https://example.com/reference.png \
+  --ratio 16:9 --resolution 720p --duration 5 \
+  --output ./r2v.mp4
 ```
 
 ## 子命令
@@ -241,7 +145,7 @@ node <skills-dir>/foxxiplay-gen/scripts/main.mjs models --type video
 |------|------|------|------|
 | `--prompt`, `-p` | string | 必填 | 画面描述 |
 | `--model`, `-m` | string | `doubao-seedream-5.0` | 模型 ID |
-| `--size`, `-s` | string | `2048x2048` | 输出尺寸。`doubao-seedream-4.5` 可用 `2K` / `4K`；`doubao-seedream-5.0-lite` 可用 `2K` / `3K` / `4K`；也可用合法像素值如 `2048x2048`、`2848x1600`、`1600x2848`；两种写法不可混用 |
+| `--size`, `-s` | string | `2048x2048` | 输出尺寸。`doubao-seedream-4.5` 可用 `2K` / `4K`；`doubao-seedream-5.0` 可用 `2K` / `3K` / `4K`；也可用合法像素值如 `2048x2048`、`2848x1600`、`1600x2848`；两种写法不可混用 |
 | `--negative-prompt` | string | — | 负向提示词 |
 | `--count`, `-n` | int 1–4 | 1 | 生成数量 |
 | `--seed` | int | — | 随机种子 |
@@ -300,7 +204,7 @@ node <skills-dir>/foxxiplay-gen/scripts/main.mjs models --type video
 
 ## 行为约定
 
-1. **图片生成**：默认 `--response-format=url`，若提供 `--output` 会自动下载到本地。使用 `doubao-seedream-4.5` 或 `doubao-seedream-5.0-lite` 时，脚本会在请求前校验 `--size` 是否符合官方的分辨率模式或像素模式规则。
+1. **图片生成**：默认 `--response-format=url`，若提供 `--output` 会自动下载到本地。使用 `doubao-seedream-4.5` 或 `doubao-seedream-5.0` 时，脚本会在请求前校验 `--size` 是否符合分辨率模式或像素模式规则。
 2. **本地媒体**：`--reference` / `--image` / `--first-frame` / `--last-frame` / `--video` / `--audio` 可传公网 URL 或本地路径；本地路径会先上传到 `--upload-url` / `FOXXIPLAY_UPLOAD_URL` / 默认 Uguu，再写入请求。
 3. **视频生成**：默认会自动轮询任务，完成后若提供 `--output` 自动下载主资源；用 `--no-wait` 跳过轮询。轮询时会兼容 `status`、`data.status`、`output.task_status`，下载时会识别 `output.video_url` 等常见结果字段。
 4. **HappyHorse 结构**：HappyHorse 系列会按 API 文档发送 `input.prompt` / `input.media` / `parameters` 结构；`happyhorse-1.0-video-edit` 需要至少一个 `--video`，并支持最多 5 张 `--image` / `--first-frame` / `--last-frame` 作为 `reference_image`。
