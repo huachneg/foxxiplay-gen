@@ -53,7 +53,7 @@ node scripts/main.mjs image \
 
 常用参数：
 
-- `--model`：默认 `doubao-seedream-5.0`，也可使用 `doubao-seedream-4.5`。
+- `--model`：默认 `doubao-seedream-5.0`，也可使用 `doubao-seedream-4.5`。`doubao-seedream-5.0-lite` 可以继续写，但它只是别名；脚本真正发给 FoxxiPlay 的模型 ID 会是当前平台开放的 `doubao-seedream-5.0`。
 - `--size`：输出尺寸，默认 `2048x2048`。
 - `--reference`：参考图 URL 或本地路径，可重复传入；本地路径会自动上传。
 - `--count`：生成数量，通常为 1 到 4。
@@ -62,10 +62,10 @@ Seedream 尺寸规则简表：
 
 | 写法 | 适用模型 | 说明 |
 |---|---|---|
-| `2K` | `doubao-seedream-4.5`、`doubao-seedream-5.0` | 在 prompt 中说明比例或用途，例如“竖版 9:16 海报”“方形头像”。 |
-| `3K` | `doubao-seedream-5.0` | 同上，由模型根据语义决定最终像素。 |
-| `4K` | `doubao-seedream-4.5`、`doubao-seedream-5.0` | 同上。 |
-| `<宽>x<高>` | `doubao-seedream-4.5`、`doubao-seedream-5.0` | 总像素需在 `3,686,400` 到 `16,777,216` 之间，宽高比需在 `1:16` 到 `16:1` 之间。 |
+| `2K` | `doubao-seedream-4.5`、`doubao-seedream-5.0`（`doubao-seedream-5.0-lite` 别名） | 在 prompt 中说明比例或用途，例如“竖版 9:16 海报”“方形头像”。 |
+| `3K` | `doubao-seedream-5.0`（`doubao-seedream-5.0-lite` 别名） | 同上，由模型根据语义决定最终像素。 |
+| `4K` | `doubao-seedream-4.5`、`doubao-seedream-5.0`（`doubao-seedream-5.0-lite` 别名） | 同上。 |
+| `<宽>x<高>` | `doubao-seedream-4.5`、`doubao-seedream-5.0`（`doubao-seedream-5.0-lite` 别名） | 总像素需在 `3,686,400` 到 `16,777,216` 之间，宽高比需在 `1:16` 到 `16:1` 之间。 |
 
 推荐像素值可以直接使用：`2048x2048`、`2304x1728`、`1728x2304`、`2848x1600`、`1600x2848`、`2496x1664`、`1664x2496`、`3136x1344`。`doubao-seedream-5.0` 还可使用 3K 档，例如 `3072x3072`、`4096x2304`、`2304x4096`。
 
